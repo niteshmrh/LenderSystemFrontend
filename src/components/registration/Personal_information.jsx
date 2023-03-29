@@ -5,11 +5,37 @@ function Personal_information(props) {
   const [bankIfscDetails, setBankIfscDetails] = useState([]);
   const [loading, setLoading] = useState(false);
   const [ifsc, setIFSC] = useState("");
-
+  const [post, setPost] = useState([]);
+  // const [loading, setLoading] = useState(false);
+  const [pin, setPin] = useState("");
+  const [count, setCount] = useState(null);
+  const [formData, setFormData] = useState({});
+  // let index=0;
+  const fetchPostalApi = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        "https://api.postalpincode.in/pincode/" + pin,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.status === 200) {
+        setPost(response.data[0].PostOffice);
+        setLoading(false);
+        //    console.log("response---",response.data[0].PostOffice);
+      } else {
+        alert("Something went wrong!!!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleIFSC = (e) => {
     setIFSC(e.target.value);
   };
-
   const fetchIFSCApi = async () => {
     try {
       setLoading(true);
@@ -29,6 +55,20 @@ function Personal_information(props) {
       console.log(error);
     }
   };
+  // console.log("pinc0de", pin);
+  // console.log("post[0]--------", post);
+  // console.log("index No--------", count);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  //*************************************** */
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("form data before", formData);
+    formData.post_name = post[formData.post_name].Name;
+    console.log("form data after", formData);
+  };
 
   let comma;
   if (bankIfscDetails.length > 0) {
@@ -36,22 +76,67 @@ function Personal_information(props) {
   } else {
     comma = "";
   }
-  console.log("IFSC", ifsc);
-  console.log("bank details----", bankIfscDetails);
+  // console.log("IFSC", ifsc);
+  // console.log("bank details----", bankIfscDetails);
 
   return (
-    <div className="py-5">
+    <div className="py-1">
       <div className="container">
         <div className="row">
           <div className="col-md-12">
-            <form className="row g-3">
+            <form className="row g-3" onSubmit={(e) => handleSubmit(e)}>
+              <div className="col-md-12">
+                <div className="row g-3 align-items-center">
+                  <div className="col-md-4">
+                    <label className="form-label">Pin Code</label>
+                    <input
+                      type="text"
+                      id="inputPan6"
+                      className="form-control"
+                      placeholder="Must be 6 Integer"
+                      name="pin"
+                      onChange={(e) => (
+                        setPin(e.target.value), handleChange(e)
+                      )}
+                    />
+                  </div>
+                  <div className="col-auto mt-5">
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => fetchPostalApi()}
+                    >
+                      Submit
+                    </button>
+                  </div>
+                 {post.length >0 ? ( <div className="col-md-4">
+                    <label className="form-label">Post Office</label>
+                    <select
+                      className="form-control form-select"
+                      name="post_name"
+                      // value={`${post[count]?.Name}`}
+                      onChange={(e) => (
+                        setCount(e.target.value), handleChange(e)
+                      )}
+                    >
+                      <option>Select PostOffice </option>
+                      {post.map((add, index) => (
+                        <option key={index} value={index}>
+                          {add.Name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>):(<span></span>)}
+                </div>
+              </div>
+              <hr />
               <div className="col-md-4">
                 <label className="form-label">First name</label>
                 <input
                   type="text"
                   className="form-control"
                   placeholder="First Name"
-                  name="First_Name"
+                  name="first_Name"
+                  onChange={(e) => handleChange(e)}
                   required
                 />
                 {/* <div className="valid-feedback">Looks good!</div> */}
@@ -62,7 +147,8 @@ function Personal_information(props) {
                   type="text"
                   className="form-control"
                   placeholder="Last Name"
-                  name="Last_Name"
+                  name="last_Name"
+                  onChange={(e) => handleChange(e)}
                   required
                 />
                 {/* <div className="valid-feedback">Looks good!</div> */}
@@ -71,58 +157,76 @@ function Personal_information(props) {
               <div className="col-md-4">
                 <label className="form-label ms-4">Gender</label>
                 <div className="fs-5 ms-4">
-                <div className="mb-2">
-                  <div className="form-check form-check-inline">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      value="male"
-                      name="gender"
-                    />
-                    <label className="form-check-label">Male</label>
+                  <div className="mb-2">
+                    <div className="form-check form-check-inline">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        value="male"
+                        name="gender"
+                        onChange={(e) => handleChange(e)}
+                      />
+                      <label className="form-check-label">Male</label>
+                    </div>
+                    <div className="form-check form-check-inline">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        value="female"
+                        name="gender"
+                        onChange={(e) => handleChange(e)}
+                      />
+                      <label className="form-check-label">Female</label>
+                    </div>
+                    <div className="form-check form-check-inline">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        value="other"
+                        name="gender"
+                        onChange={(e) => handleChange(e)}
+                      />
+                      <label className="form-check-label">Other</label>
+                    </div>
                   </div>
-                  <div className="form-check form-check-inline">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      value="female"
-                      name="gender"
-                    />
-                    <label className="form-check-label">Female</label>
-                  </div>
-                  <div className="form-check form-check-inline">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      value="other"
-                      name="gender"
-                    />
-                    <label className="form-check-label">Other</label>
-                  </div>
-                </div>
                 </div>
               </div>
 
               {/* <div className="col-md-4"></div> */}
               <div className="col-md-4">
                 <label className="form-label">City</label>
-                <input type="text" className="form-control" required />
+                <input
+                  type="text"
+                  className="form-control"
+                  name="city"
+                  onChange={(e) => handleChange(e)}
+                  required
+                />
                 <div className="invalid-feedback">
                   Please provide a valid city.
                 </div>
               </div>
               <div className="col-md-4">
                 <label className="form-label">State</label>
-                <select className="form-select" required>
-                  <option value="selected" disabled>
-                    Choose...
+                <select
+                  className="form-select"
+                  onChange={(e) => handleChange(e)}
+                  required
+                >
+                  <option value={post[count]?.State}>
+                    {post[count]?.State}
                   </option>
-                  <option>...</option>
                 </select>
               </div>
               <div className="col-md-4">
-                <label className="form-label">Zip</label>
-                <input type="text" className="form-control" required />
+                <label className="form-label">Pin</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={`${pin}`}
+                  onChange={(e) => handleChange(e)}
+                  disabled
+                />
               </div>
               <div className="col-md-4">
                 <label className="form-label">Aadhar Number</label>
@@ -130,6 +234,8 @@ function Personal_information(props) {
                   type="text"
                   className="form-control"
                   placeholder="Aadhar"
+                  name="aadhar_number"
+                  onChange={(e) => handleChange(e)}
                   required
                 />
                 {/* <div className="valid-feedback">Looks good!</div> */}
@@ -140,6 +246,8 @@ function Personal_information(props) {
                   type="text"
                   className="form-control"
                   placeholder="Pan card Number"
+                  name="pan_number"
+                  onChange={(e) => handleChange(e)}
                   required
                 />
                 {/* <div className="valid-feedback">Looks good!</div> */}
@@ -150,9 +258,25 @@ function Personal_information(props) {
                   type="text"
                   className="form-control"
                   placeholder="Phone Number"
+                  name="phone_number"
+                  onChange={(e) => handleChange(e)}
                   required
                 />
                 {/* <div className="valid-feedback">Looks good!</div> */}
+              </div>
+              {/* <span className="text-center fs-4 fw-bold">
+                Identification Marks
+              </span> */}
+              <div className="col-md-6">
+                <label className="form-label">Identification Marks</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Identification Marks"
+                  name="identification_marks"
+                  onChange={(e) => handleChange(e)}
+                  required
+                />
               </div>
               <hr />
               <span className="text-center fs-4 fw-bold">Bank Details</span>
@@ -163,7 +287,7 @@ function Personal_information(props) {
                   className="form-control"
                   placeholder="IFSC CODE"
                   name="IFSC"
-                  onChange={(e) => handleIFSC(e)}
+                  onChange={(e) => (handleIFSC(e), handleChange(e))}
                   required
                 />
                 <div className="ms-2 ms-2 text-danger fw-bold">
@@ -187,6 +311,8 @@ function Personal_information(props) {
                     type="text"
                     className="form-control"
                     placeholder="Account Number"
+                    name="account_number"
+                    onChange={(e) => handleChange(e)}
                     required
                   />
                   <div className="ms-2 text-danger fw-bold">
@@ -195,31 +321,35 @@ function Personal_information(props) {
                 </div>
               )}
               <hr />
-              <span className="text-center fs-4 fw-bold">
-                Identification Marks
-              </span>
-              <div className="col-md-6">
-                <label className="form-label">Identification Marks</label>
+
+              {/* <hr /> */}
+              <span className="text-center fs-4 fw-bold">Employment Type</span>
+              <div className="col-md-4">
+                <label className="form-label">Employment Type</label>
+                <select
+                  className="form-select"
+                  name="emp_type"
+                  onChange={(e) => handleChange(e)}
+                  required
+                >
+                  <option>Select Option</option>
+                  <option value="salairied">Salaried</option>
+                  <option value="self employed">Self Employed</option>
+                </select>
+              </div>
+              <div className="col-md-4">
+                <label className="form-label">Monthly Income</label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Identification Marks"
+                  placeholder="Income"
+                  name="income"
+                  onChange={(e) => handleChange(e)}
                   required
                 />
+                {/* <div className="valid-feedback">Looks good!</div> */}
               </div>
-              <hr/>
-              <span className="text-center fs-4 fw-bold">
-                Employment Type
-              </span>
-              <div className="col-md-4">
-                <label className="form-label">Employment Type</label>
-                <select className="form-select" required>
-                  <option>Select Option</option>
-                  <option value='salairied'>Salaried</option>
-                  <option value='self employed'>Self Employed</option>
-                </select>
-              </div>
-              <hr/>
+              <hr />
               <div className="col-12">
                 <div className="form-check">
                   <input

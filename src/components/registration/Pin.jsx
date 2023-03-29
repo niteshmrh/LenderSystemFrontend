@@ -35,9 +35,9 @@ function Pin(props) {
       console.log(error);
     }
   };
-  console.log("pinc0de", pin);
-  console.log("post[0]--------", post);
-  console.log("index No--------", count);
+  // console.log("pinc0de", pin);
+  // console.log("post[0]--------", post);
+  // console.log("index No--------", count);
   // if(count){
   //   console.log(post[count]);
   //   localStorage.setItem(post[count])
