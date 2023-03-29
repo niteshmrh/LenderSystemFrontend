@@ -46,8 +46,9 @@ function SignUp(props) {
       );
       console.log(response);
       if (response.status === 201) {
+        alert(response.data.message);
         setIsFormSubmit(false);
-        window.location = "/";
+        // window.location = "/";
       } else {
         alert("Something went wrong!!!");
       }

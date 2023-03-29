@@ -4,6 +4,8 @@ import { NavLink } from "react-router-dom";
 import Pin from "./Pin";
 import Stepbar from "./Stepbar";
 import EmployementType from "./EmployementType";
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+
 
 function Registration(props) {
   const [count, setCount] = useState(1);
@@ -19,17 +21,17 @@ function Registration(props) {
           <div className="col-md-12 py-3">
             <div className="border border-primary py-3">
               <Stepbar />
-              {count == 1 ? (
+              {/* {count == 1 ? (
                 <Pin />
               ) : count == 2 ? (
-                <Personal_information />
-              ) : count == 3 ? (
-                <EmployementType />
-              ) : (
-                <div></div>
-              )}
+                ) : count == 3 ? (
+                  <EmployementType />
+                  ) : (
+                    <div></div>
+                  )} */}
               {/* <Pin /> */}
-              <div className="text-end me-3">
+              <Personal_information />
+              {/* <div className="text-end me-3">
                 {count <= 2 ? (
                   <div className="col-auto">
                     <button
@@ -44,7 +46,7 @@ function Registration(props) {
                     <button className="btn btn-primary">Submit</button>
                   </div>
                 )}
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
