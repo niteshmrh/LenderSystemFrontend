@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
-export const pinDetailsContext = createContext();
+export const JWTContext = createContext();
 
-function pinAddStorage(props){
-    const { pinAdd, setPinAdd } = useContext(pinDetailsContext);
+function JWTStroage(props){
+    const { JWTdata, setJWTData } = useContext(JWTContext);
 }

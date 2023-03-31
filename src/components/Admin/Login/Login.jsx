@@ -1,13 +1,9 @@
-import { Password } from "@mui/icons-material";
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import image from "../../asset/imageback.jpg";
+import image from "../../../asset/imageback.jpg";
 import axios from "axios";
-// import PersonIcon from '@mui/icons-material/Person';
-import "./Login.css";
 
-
-function Login(props) {
+function AdminLogin(props) {
   const [showPassword, setShowPassword] = useState("password");
   const [formData, setFormData] = useState({});
 
@@ -63,10 +59,11 @@ function Login(props) {
               <div className="login-form border p-2 m-2 rounded bg-light">
                 {/* heading */}
                 <h2 className="text-center mt-3">
-                  LogIn as <span style={{ color: "pink" }}>Lender</span>
+                  LogIn as <span style={{ color: "pink" }}>Lender Admin</span>
                 </h2>
 
                 <form onSubmit={(e) => handleSubmit(e)}>
+                  {/* <legend>Login as Admin</legend> */}
                   {/* Email Section */}
                   <div className="mb-3 mt-4">
                     <input
@@ -127,4 +124,4 @@ function Login(props) {
   );
 }
 
-export default Login;
+export default AdminLogin;
