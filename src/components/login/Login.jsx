@@ -1,15 +1,17 @@
 import { Password } from "@mui/icons-material";
-import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useContext, useState, useEffect } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import image from "../../asset/imageback.jpg";
 import axios from "axios";
-// import PersonIcon from '@mui/icons-material/Person';
+import { UserContext } from "../../context/userContext";
 import "./Login.css";
-
 
 function Login(props) {
   const [showPassword, setShowPassword] = useState("password");
   const [formData, setFormData] = useState({});
+  const { user, setUser } = useContext(UserContext);
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -18,7 +20,6 @@ function Login(props) {
     e.preventDefault();
     console.log(formData);
     try {
-      // setIsFormSubmit(true);
       const response = await axios.post(
         "/signin",
         {
@@ -33,9 +34,13 @@ function Login(props) {
       );
       console.log(response);
       if (response.status === 200) {
-        alert(response.data.message);
-        // setIsFormSubmit(false);
-        window.location = "/";
+        // console.log("response.data.data.id",response.data.data.id);
+        setUser(response.data.data);
+        navigate("/");
+        console.log("--------", response.data.data);
+        localStorage.setItem("localCart", JSON.stringify(response.data.data));
+        // const id = response.data.data.id;
+        // window.location = `/dashboard`; no need we already use navigate here for next page
       } else {
         alert(response.data.message);
       }
@@ -43,7 +48,7 @@ function Login(props) {
       console.log(error);
     }
   };
-
+  // console.log(loginData)
   return (
     <div>
       <div
@@ -106,11 +111,9 @@ function Login(props) {
                   </div>
                   {/* Submit buttonsection */}
                   <div className="btn">
-                    {/* <NavLink to='/home'> */}
                     <button type="submit" className="btn btn-primary">
                       Login
                     </button>
-                    {/* </NavLink> */}
                   </div>
                   <div>
                     <NavLink to="/signup" className="text-decoration-none">
