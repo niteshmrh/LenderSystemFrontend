@@ -8,7 +8,8 @@ import Home from "./components/Home/Home";
 import Personal_information from "./components/registration/Personal_information";
 import EmployementType from "./components/registration/EmployementType";
 import SignUp from "./components/signup/SignUp";
-import UserForm from "./components/registration/UserForm";
+import AdminLogin from "./components/Admin/Login/Login";
+// import UserForm from "./components/registration/UserForm";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home type="home" />} />
         <Route path="/login" element={<Login type="login" />} />
+        <Route path="/admin" element={<AdminLogin type="adminlogin" />} />
         <Route path="/signup" element={<SignUp type="signup" />} />
         <Route path="/registration" element={<Registration type="login" />} />
         <Route path="/pin" element={<Pin type="pin_code" />} />
@@ -28,7 +30,7 @@ function App() {
           path="employment_type"
           element={<EmployementType type="employment_type" />}
         />
-        <Route path="/userform" element={<UserForm type="userform" />} />=
+        {/* <Route path="/userform" element={<UserForm type="userform" />} /> */}
       </Routes>
     </div>
   );
