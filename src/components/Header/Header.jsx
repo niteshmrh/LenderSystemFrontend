@@ -46,18 +46,22 @@ function Header(props) {
                   </div>
                 </div>
               </div>
-              <div className="d-flex justify-content-end me-2 text-decoration-none">
+              <div className="d-flex justify-content-end me-2">
                 {!user ? (
                   <div>
-                    <NavLink to="/login">Login</NavLink>
+                    <NavLink to="/login" className="text-decoration-none">
+                      Login
+                    </NavLink>
                     <span>&nbsp;|&nbsp;</span>
-                    <NavLink to="/signup">SignUp</NavLink>
+                    <NavLink to="/signup" className="text-decoration-none">
+                      SignUp
+                    </NavLink>
                   </div>
                 ) : (
                   <a
                     role="button"
                     tabIndex={0}
-                    className="text-primary"
+                    className="text-primary text-decoration-none"
                     onClick={() => {
                       setUser(null);
                       localStorage.clear();
