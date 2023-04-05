@@ -12,7 +12,7 @@ function BeforeLogin(props) {
       <Route path="/" element={<Home type="home" />} />
       <Route path="/login" element={<Login type="login" />} />
       <Route path="/signup" element={<SignUp type="signup" />} />
-      <Route path="/admin" element={<AdminLogin type="adminlogin" />} />
+      {/* <Route path="/admin" element={<AdminLogin type="adminlogin" />} /> */}
       <Route path="*" element={<PageNotFound type="Page_Not_Found" />} />
     </Routes>
   );
