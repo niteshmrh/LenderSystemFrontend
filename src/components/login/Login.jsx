@@ -32,17 +32,17 @@ function Login(props) {
           },
         }
       );
-      console.log(response);
       if (response.status === 200) {
-        // console.log("response.data.data.id",response.data.data.id);
         setUser(response.data.data);
         navigate("/");
-        console.log("--------", response.data.data);
+        // console.log("--------", response.data.data);
         localStorage.setItem("localCart", JSON.stringify(response.data.data));
-        // const id = response.data.data.id;
         // window.location = `/dashboard`; no need we already use navigate here for next page
-      } else {
+      } else if (response.status === 500) {
+        // console.log("Wrong password");
         alert(response.data.message);
+      } else {
+        alert("Something went wrong");
       }
     } catch (error) {
       console.log(error);

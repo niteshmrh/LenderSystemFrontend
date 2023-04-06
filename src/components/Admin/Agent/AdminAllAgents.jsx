@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import AdminUpdateAgent from "./AdminUpdateAgent";
 
 function AdminAllAgents(props) {
   const [agentDetails, setAgentDetails] = useState({});
   const [isLoding, setIsLoding] = useState(false);
+  const [oneAgentData, setOneAgentData] = useState({});
 
   // http://10.10.1.160:4000/api/v1/allAgentData
   const fetchUserDetails = async () => {
@@ -32,7 +34,10 @@ function AdminAllAgents(props) {
   useEffect(() => {
     fetchUserDetails();
   }, []);
-  console.log("agentData--++++++", agentDetails);
+
+  // console.log("agentData--++++++", agentDetails);
+  // console.log("OneagentData--++++++", oneAgentData);
+
   return (
     <div className="py-4">
       <div className="container">
@@ -117,7 +122,12 @@ function AdminAllAgents(props) {
                           </button>
                         </td>
                         <td>
-                          <button className="btn btn-primary">
+                          <button
+                            className="btn btn-primary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#updateAgent"
+                            onClick={() => setOneAgentData(agent)}
+                          >
                             <EditIcon />
                           </button>
                         </td>
@@ -129,6 +139,7 @@ function AdminAllAgents(props) {
           </div>
         </div>
       </div>
+      <AdminUpdateAgent agent={oneAgentData} />
     </div>
   );
 }

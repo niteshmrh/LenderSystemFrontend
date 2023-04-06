@@ -2,8 +2,8 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import PageNotFound from "../../PNF/PageNotFound";
 import AdminDashBoard from "../AdminDashBoard/AdminDashBoard";
-import AdminAllAgents from "../ShowAgent/AdminAllAgents";
-import AdminAllLenders from "../ShowLenders/AdminAllLenders";
+import AdminAllAgents from "../Agent/AdminAllAgents";
+import AdminAllLenders from "../Lenders/AdminAllLenders";
 
 function AdminRoute(props) {
   return (

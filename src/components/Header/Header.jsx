@@ -6,7 +6,7 @@ function Header(props) {
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
-  console.log("--------+++++", user);
+  console.log("In header -----", user);
 
   return (
     <div className="py-1">
@@ -58,18 +58,30 @@ function Header(props) {
                     </NavLink>
                   </div>
                 ) : (
-                  <a
-                    role="button"
-                    tabIndex={0}
-                    className="text-primary text-decoration-none"
-                    onClick={() => {
-                      setUser(null);
-                      localStorage.clear();
-                      navigate("/");
-                    }}
-                  >
-                    Logout
-                  </a>
+                  <div className="flex-row">
+                    {user.roleId == 2 ? (
+                      <span>
+                        <NavLink to="#" className="text-decoration-none">
+                          Registration
+                        </NavLink>
+                        <span>&nbsp;|&nbsp;</span>
+                      </span>
+                    ) : (
+                      <span></span>
+                    )}
+                    <a
+                      role="button"
+                      tabIndex={0}
+                      className="text-primary text-decoration-none"
+                      onClick={() => {
+                        setUser(null);
+                        localStorage.clear();
+                        navigate("/");
+                      }}
+                    >
+                      Logout
+                    </a>
+                  </div>
                 )}
               </div>
             </nav>
