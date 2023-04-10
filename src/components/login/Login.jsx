@@ -1,4 +1,3 @@
-import { Password } from "@mui/icons-material";
 import React, { useContext, useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import image from "../../asset/imageback.jpg";
@@ -32,19 +31,19 @@ function Login(props) {
           },
         }
       );
-      console.log(response);
       if (response.status === 200) {
-        // console.log("response.data.data.id",response.data.data.id);
         setUser(response.data.data);
         navigate("/");
-        console.log("--------", response.data.data);
+        // console.log("--------", response.data.data);
         localStorage.setItem("localCart", JSON.stringify(response.data.data));
-        // const id = response.data.data.id;
         // window.location = `/dashboard`; no need we already use navigate here for next page
       } else {
-        alert(response.data.message);
+        alert("Something went wrong");
+        alert(response.data.err.error.error);
       }
     } catch (error) {
+      alert(error.response.data.err.error.error);
+      // console.log(error.response.data.err.error.error);
       console.log(error);
     }
   };

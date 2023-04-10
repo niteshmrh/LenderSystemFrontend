@@ -48,7 +48,7 @@ function Personal_information(props) {
   // const handleIFSC = (e) => {
   //   setIFSC(e.target.value);
   // };
-  
+
   const fetchIFSCApi = async (ifsc) => {
     try {
       setLoading(true);
@@ -60,7 +60,7 @@ function Personal_information(props) {
       if (response.status === 200) {
         setBankIfscDetails(response.data);
         setLoading(false);
-           console.log("response---",response.data[0].PostOffice);
+        console.log("response---", response.data[0].PostOffice);
       } else {
         alert("Something went wrong!!!");
       }
@@ -72,8 +72,7 @@ function Personal_information(props) {
   // console.log("pinc0de", pin);
   // console.log("post[0]--------", post);
   // console.log("index No--------", count);
-  
-  
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -136,17 +135,17 @@ function Personal_information(props) {
                     >
                       Submit
                     </button> */}
-                    {loading == true && postres==true ? (
+                    {loading == true && postres == true ? (
                       <img
                         src="https://apptimize.com/wp-content/uploads/2015/10/Ajax-loader.gif"
-                        alt="....."
+                        alt=""
                         height="5rem"
                       />
                     ) : (
                       <span></span>
                     )}
                   </div>
-                  {postres == true && post.length >0 ? (
+                  {postres == true && post.length > 0 ? (
                     <div className="col-md-4">
                       <label className="form-label">Post Office</label>
                       <select
