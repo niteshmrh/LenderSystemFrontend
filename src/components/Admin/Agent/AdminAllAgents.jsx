@@ -8,8 +8,10 @@ function AdminAllAgents(props) {
   const [agentDetails, setAgentDetails] = useState({});
   const [isLoding, setIsLoding] = useState(false);
   const [oneAgentData, setOneAgentData] = useState({});
+  const [isDeleteClient, setIsDeleteClient] = useState(false);
 
-  // http://10.10.1.160:4000/api/v1/allAgentData
+  // url-------   http://10.10.1.160:4000/api/v1/allAgentData
+
   const fetchUserDetails = async () => {
     try {
       setIsLoding(true);
@@ -31,9 +33,30 @@ function AdminAllAgents(props) {
     }
   };
 
+  // url --- paste your url first
+  // const handleDeleteAgent = async (uid) => {
+  //   try {
+  //     setIsDeleteClient(true);
+  //     const responce = await axios.delete(`/deleteAgent?id=${uid}`, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+
+  //     if (responce.status === 200) {
+  //       setIsDeleteClient(false);
+  //       window.location = "/"; //comming this to not reload the whole page
+  //     } else {
+  //       alert("Somethings went wrong !!!!");
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
   useEffect(() => {
     fetchUserDetails();
-  }, []);
+  }, [isDeleteClient]);
 
   // console.log("agentData--++++++", agentDetails);
   // console.log("OneagentData--++++++", oneAgentData);
@@ -80,6 +103,7 @@ function AdminAllAgents(props) {
                         <td>
                           {agent?.lastName == null ? "null" : agent?.lastName}
                         </td>
+
                         {/* <td>
                           {agent?.fatherName == null
                             ? "null"
@@ -93,6 +117,7 @@ function AdminAllAgents(props) {
                             ? "null"
                             : agent?.dateOfBirth}
                         </td> */}
+
                         <td>
                           {agent?.emailId == null ? "null" : agent?.emailId}
                         </td>
@@ -102,6 +127,7 @@ function AdminAllAgents(props) {
                         <td>
                           {agent?.mobileNo == null ? "null" : agent?.mobileNo}
                         </td>
+
                         {/* <td>
                           {agent?.ifscCode == null ? "null" : agent?.ifscCode}
                         </td>
@@ -116,8 +142,12 @@ function AdminAllAgents(props) {
                         <td>
                           {agent?.aadharId == null ? "null" : agent?.aadharId}
                         </td> */}
+
                         <td>
-                          <button className="btn btn-danger">
+                          <button
+                            className="btn btn-danger"
+                            // onClick={() => handleDeleteAgent(agent?.uid)}
+                          >
                             <DeleteIcon />
                           </button>
                         </td>

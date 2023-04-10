@@ -1,4 +1,3 @@
-import { Password } from "@mui/icons-material";
 import React, { useContext, useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import image from "../../asset/imageback.jpg";
@@ -38,13 +37,13 @@ function Login(props) {
         // console.log("--------", response.data.data);
         localStorage.setItem("localCart", JSON.stringify(response.data.data));
         // window.location = `/dashboard`; no need we already use navigate here for next page
-      } else if (response.status === 500) {
-        // console.log("Wrong password");
-        alert(response.data.message);
       } else {
         alert("Something went wrong");
+        alert(response.data.err.error.error);
       }
     } catch (error) {
+      alert(error.response.data.err.error.error);
+      // console.log(error.response.data.err.error.error);
       console.log(error);
     }
   };
