@@ -11,7 +11,7 @@ function AdminAllLenders(props) {
   const fetchUserDetails = async () => {
     try {
       setIsLoding(true);
-      const response = await axios.get("/lenderData", {
+      const response = await axios.get("/getAllLender", {
         headers: {
           "Content-Type": "application/json",
         },
@@ -32,7 +32,7 @@ function AdminAllLenders(props) {
   useEffect(() => {
     fetchUserDetails();
   }, []);
-  console.log("userDetails--++++++", userDetails);
+  // console.log("userDetails--++++++", userDetails);
 
   return (
     <div className="py-4">
@@ -59,6 +59,14 @@ function AdminAllLenders(props) {
                     <th scope="col">Bank Account Number</th>
                     <th scope="col">Pan</th>
                     <th scope="col">Aadhar</th>
+
+                    <th scope="col">Password</th>
+                    <th scope="col">Created At</th>
+                    <th scope="col">Updated At</th>
+
+                    <th scope="col">isDeleted</th>
+                    <th scope="col">isActive</th>
+                    <th scope="col">Created By</th>
 
                     <th scope="col">Delete</th>
                     <th scope="col">Update</th>
@@ -110,6 +118,15 @@ function AdminAllLenders(props) {
                         <td>
                           {person?.aadharId == null ? "null" : person?.aadharId}
                         </td>
+                        <td>
+                          {person?.password == null ? "null" : person?.password}
+                        </td>
+                        <td>{new Date(person?.createdAt).toUTCString()}</td>
+                        <td>{new Date(person?.updatedAt).toUTCString()}</td>
+                        <td>{person?.isDeleted == "N" ? "NO" : "YES"}</td>
+                        <td>{person?.isActive == "N" ? "NO" : "YES"}</td>
+                        <td>{person?.createdBy}</td>
+
                         <td>
                           <button className="btn btn-danger">
                             <DeleteIcon />

@@ -3,31 +3,33 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
 function AdminUpdateAgent(props) {
-  // const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({});
   const [isFormSubmit, setIsFormSubmit] = useState(false);
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
   const agent = props?.agent;
   const uid = props?.agent?.uid;
+
   // console.log("props-----", props, uid);
+  // const [firstName, setFirstName] = useState("");
+  // const [lastName, setLastName] = useState("");
+  // const [mobile, setMobile] = useState("");
+  // const [password, setPassword] = useState("");
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [mobile, setMobile] = useState("");
-  const [password, setPassword] = useState("");
+  // console.log("getting---------------", props?.agent?.firstName);
 
-  useEffect(() => {
-    if (props) {
-      setFirstName(props?.agent?.firstName);
-      setLastName(props?.agent?.lastName);
-      setMobile(props?.agent?.mobileNo);
-      setPassword(props?.agent?.password);
-    }
-  }, [props]);
+  // useEffect(() => {
+  //   if (props) {
+  //     setFirstName(props?.agent?.firstName);
+  //     setLastName(props?.agent?.lastName);
+  //     setMobile(props?.agent?.mobileNo);
+  //     setPassword(props?.agent?.password);
+  //   }
+  // }, [props]);
 
-  // const handleChange = (e) => {
-  //   setFormData({ ...formData, [e.target.name]: e.target.value });
-  // };
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   // http://10.10.1.160:4000/api/v1/updateAgent?id=14
 
@@ -38,11 +40,16 @@ function AdminUpdateAgent(props) {
       const response = await axios.patch(
         `/updateAgent?id=${uid}`,
         {
-          firstName: firstName,
-          lastName: lastName,
+          // firstName: firstName,
+          // lastName: lastName,
           // emailId: props.email,
-          mobileNo: mobile,
-          password: password,
+          // mobileNo: mobile,
+          // password: password,
+
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          mobileNo: formData.mobile,
+          password: formData.password,
         },
         {
           headers: {
@@ -94,9 +101,9 @@ function AdminUpdateAgent(props) {
                       className="form-control"
                       placeholder="First Name"
                       name="firstName"
-                      value={`${firstName ? firstName : ""}`}
-                      // onChange={(e) => handleChange(e)}
-                      onChange={(e) => setFirstName(e.target.value)}
+                      defaultValue={agent?.firstName ? agent?.firstName : ""}
+                      onChange={(e) => handleChange(e)}
+                      // onChange={(e) => setFirstName(e.target.value)}
                       required
                     />
                     {/* <label>First name</label> */}
@@ -107,9 +114,9 @@ function AdminUpdateAgent(props) {
                       className="form-control"
                       placeholder="Last Name"
                       name="lastName"
-                      value={`${lastName ? lastName : ""}`}
-                      // onChange={(e) => handleChange(e)}
-                      onChange={(e) => setLastName(e.target.value)}
+                      defaultValue={agent?.lastName ? agent?.lastName : ""}
+                      onChange={(e) => handleChange(e)}
+                      // onChange={(e) => setLastName(e.target.value)}
                       required
                     />
                     {/* <label>Last name</label> */}
@@ -121,8 +128,8 @@ function AdminUpdateAgent(props) {
                     className="form-control"
                     placeholder="Email"
                     name="email"
-                    value={agent?.emailId}
-                    // onChange={(e) => handleChange(e)}
+                    defaultValue={agent?.emailId}
+                    onChange={(e) => handleChange(e)}
                     // onChange={(e) => setName(e.target.value)}
                     disabled
                   />
@@ -133,9 +140,9 @@ function AdminUpdateAgent(props) {
                     className="form-control"
                     placeholder="Mobile Number"
                     name="mobile"
-                    value={`${mobile ? mobile : ""}`}
-                    // onChange={(e) => handleChange(e)}
-                    onChange={(e) => setMobile(e.target.value)}
+                    defaultValue={agent?.mobileNo ? agent?.mobileNo : ""}
+                    onChange={(e) => handleChange(e)}
+                    // onChange={(e) => setMobile(e.target.value)}
                     required
                   />
                 </div>
@@ -145,9 +152,9 @@ function AdminUpdateAgent(props) {
                     className="form-control"
                     placeholder="Password"
                     name="password"
-                    value={`${password ? password : ""}`}
-                    // onChange={(e) => handleChange(e)}
-                    onChange={(e) => setPassword(e.target.value)}
+                    defaultValue={agent?.password ? agent?.password : ""}
+                    onChange={(e) => handleChange(e)}
+                    // onChange={(e) => setPassword(e.target.value)}
                     required
                   />
                   <div className="col-auto">

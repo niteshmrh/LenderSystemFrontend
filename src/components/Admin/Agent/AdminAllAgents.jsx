@@ -12,7 +12,7 @@ function AdminAllAgents(props) {
 
   // url-------   http://10.10.1.160:4000/api/v1/allAgentData
 
-  const fetchUserDetails = async () => {
+  const fetchAllAgentDetails = async () => {
     try {
       setIsLoding(true);
       const response = await axios.get("/allAgentData", {
@@ -34,28 +34,28 @@ function AdminAllAgents(props) {
   };
 
   // url --- paste your url first
-  // const handleDeleteAgent = async (uid) => {
-  //   try {
-  //     setIsDeleteClient(true);
-  //     const responce = await axios.delete(`/deleteAgent?id=${uid}`, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
+  const handleDeleteAgent = async (id) => {
+    try {
+      setIsDeleteClient(true);
+      const responce = await axios.patch(`/deleteAgent?id=${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-  //     if (responce.status === 200) {
-  //       setIsDeleteClient(false);
-  //       window.location = "/"; //comming this to not reload the whole page
-  //     } else {
-  //       alert("Somethings went wrong !!!!");
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+      if (responce.status === 200) {
+        setIsDeleteClient(false);
+        window.location = "/agent"; //comming this to not reload the whole page
+      } else {
+        alert("Somethings went wrong !!!!");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
-    fetchUserDetails();
+    fetchAllAgentDetails();
   }, [isDeleteClient]);
 
   // console.log("agentData--++++++", agentDetails);
@@ -87,6 +87,13 @@ function AdminAllAgents(props) {
                     {/* <th scope="col">Bank Account Number</th> */}
                     {/* <th scope="col">Pan</th> */}
                     {/* <th scope="col">Aadhar</th> */}
+                    <th scope="col">Created At</th>
+                    <th scope="col">Updated At</th>
+
+                    <th scope="col">isDeleted</th>
+                    <th scope="col">isActive</th>
+                    <th scope="col">Created By</th>
+                    <th scope="col">Updated By</th>
 
                     <th scope="col">Delete</th>
                     <th scope="col">Update</th>
@@ -128,6 +135,16 @@ function AdminAllAgents(props) {
                           {agent?.mobileNo == null ? "null" : agent?.mobileNo}
                         </td>
 
+                        <td>{new Date(agent?.createdAt).toUTCString()}</td>
+                        <td>{new Date(agent?.updatedAt).toUTCString()}</td>
+                        <td>{agent?.isDeleted == "N" ? "NO" : "YES"}</td>
+                        <td>{agent?.isActive == "N" ? "NO" : "YES"}</td>
+                        <td>
+                          {agent?.createdBy == null ? "null" : agent?.createdBy}
+                        </td>
+                        <td>
+                          {agent?.updatedBy == null ? "null" : agent?.updatedBy}
+                        </td>
                         {/* <td>
                           {agent?.ifscCode == null ? "null" : agent?.ifscCode}
                         </td>
@@ -146,7 +163,7 @@ function AdminAllAgents(props) {
                         <td>
                           <button
                             className="btn btn-danger"
-                            // onClick={() => handleDeleteAgent(agent?.uid)}
+                            onClick={() => handleDeleteAgent(agent?.uid)}
                           >
                             <DeleteIcon />
                           </button>
