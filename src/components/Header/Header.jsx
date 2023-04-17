@@ -1,16 +1,21 @@
 import React, { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import jwt_decode from "jwt-decode";
 
 function Header(props) {
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
-  console.log("In header -----", user);
+  // console.log("In header -----", user);
+  if (user) {
+    var decoded = jwt_decode(user?.newJWT);
+  }
 
   return (
     <div className="py-1">
-      <div className="container">
+      <div className="container-fluid">
         <div className="row">
           <div className="col-md-12">
             <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -59,31 +64,69 @@ function Header(props) {
                   </div>
                 ) : (
                   <div className="flex-row">
-                    {user.roleId == 2 ? (
-                      <span>
-                        <NavLink
-                          to="/registration"
-                          className="text-decoration-none"
-                        >
-                          Registration
-                        </NavLink>
-                        <span>&nbsp;|&nbsp;</span>
-                      </span>
-                    ) : (
-                      <span></span>
-                    )}
-                    <a
-                      role="button"
-                      tabIndex={0}
-                      className="text-primary text-decoration-none"
-                      onClick={() => {
-                        setUser(null);
-                        localStorage.clear();
-                        navigate("/");
-                      }}
-                    >
-                      Logout
-                    </a>
+                    <div className="btn-group dropstart">
+                      <a
+                        // type="button"
+                        className="btn-primary"
+                        data-bs-toggle="dropdown"
+                      >
+                        <AccountCircleIcon />
+                      </a>
+                      <ul className="dropdown-menu">
+                        <li>
+                          <a className="dropdown-item" href="#">
+                            {decoded?.firstName + " " + decoded?.lastName}
+                          </a>
+                        </li>
+                        <li>
+                          <hr className="dropdown-divider" />
+                        </li>
+                        <li>
+                          <a className="dropdown-item" href="#">
+                            Profile
+                          </a>
+                        </li>
+                        <li>
+                          {user.roleId == 2 ? (
+                            <span>
+                              <NavLink
+                                to="/registration"
+                                className="dropdown-item text-primary text-decoration-none"
+                              >
+                                Registration
+                              </NavLink>
+                            </span>
+                          ) : (
+                            <span></span>
+                          )}
+                        </li>
+                        <li>
+                          {/* <NavLink
+                            to="#"
+                            className="dropdown-item text-primary text-decoration-none"
+                          > */}
+                          <a className="dropdown-item" href="#">
+                            Plans
+                          </a>
+
+                          {/* </NavLink> */}
+                        </li>
+                        <li>
+                          <a
+                            className="dropdown-item text-primary text-decoration-none"
+                            role="button"
+                            tabIndex={0}
+                            onClick={() => {
+                              setUser(null);
+                              localStorage.clear();
+                              navigate("/");
+                            }}
+                          >
+                            Logout
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                 )}
               </div>

@@ -5,6 +5,7 @@ import { UserContext } from "../../context/userContext";
 import AdminRoutes from "../../components/Admin/AdminRoute/AdminRoutes";
 import UserRoutes from "../../components/User/UserRoutes/UserRoutes";
 import AgentRoutes from "../../components/Agent/AgentRoutes/AgentRoutes";
+import UserLayout from "../../components/User/components/UserLayout";
 
 function AfterLogin(props) {
   const { user } = useContext(UserContext);
@@ -14,7 +15,7 @@ function AfterLogin(props) {
       {user?.roleId == 1 ? (
         <AdminRoutes />
       ) : user.roleId == 2 ? (
-        <UserRoutes />
+        <UserLayout />
       ) : (
         <AgentRoutes />
       )}
