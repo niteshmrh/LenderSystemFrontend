@@ -61,7 +61,10 @@ function Header(props) {
                   <div className="flex-row">
                     {user.roleId == 2 ? (
                       <span>
-                        <NavLink to="#" className="text-decoration-none">
+                        <NavLink
+                          to="/registration"
+                          className="text-decoration-none"
+                        >
                           Registration
                         </NavLink>
                         <span>&nbsp;|&nbsp;</span>
