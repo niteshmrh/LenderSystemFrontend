@@ -9,7 +9,7 @@ function Registration(props) {
   const { uid } = decoded;
 
   const [bankIfscDetails, setBankIfscDetails] = useState([]);
-  const [ifsc, setIFSC] = useState("");
+  // const [ifsc, setIFSC] = useState("");
   const [post, setPost] = useState([]);
   const [pin, setPin] = useState("");
   const [count, setCount] = useState(null);

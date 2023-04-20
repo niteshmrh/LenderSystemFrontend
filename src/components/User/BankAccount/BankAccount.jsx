@@ -1,8 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 function BankAccount(props) {
+  const [formData, setFormData] = useState({});
+  const [ifscDetails, setIfscDetails] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  // console.log(formData);
+
+  const fetchIFSCApi = async (ifsc) => {
+    try {
+      setLoading(true);
+      const response = await axios.get("https://ifsc.razorpay.com/" + ifsc, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.status === 200) {
+        setIfscDetails(response.data);
+        setFormData({
+          ...formData,
+          address: response.data.ADDRESS,
+          bankName: response.data.BANK,
+          micr: response.data.MICR,
+        });
+        setLoading(false);
+      } else {
+        alert("Something went wrong!!!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSubmitBank = (e) => {
+    e.preventDefault();
+    console.log("-----", formData);
+  };
+
+  // console.log(ifscDetails);
+
   return (
     <div className="bank-account">
       <div className="fs-3">
@@ -10,32 +52,27 @@ function BankAccount(props) {
       </div>
       <hr />
       <div className="mt-5">
-        <form>
+        <form onSubmit={(e) => handleSubmitBank(e)}>
           <div className="row ms-3">
             <div className="col-md-6">
               <label className="form-label">Full Name</label>
               <input
                 type="text"
                 className="form-control"
-                placeholder="Full Name"
+                placeholder="Full Name As Bank Passbook"
+                name="name"
+                onChange={(e) => handleChange(e)}
                 required
               />
             </div>
             <div className="col-md-6">
-              <label className="form-label">Bank Name</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Bank Name"
-                required
-              />
-            </div>
-            <div className="col-md-6 mt-4">
               <label className="form-label">Bank Account Number</label>
               <input
                 type="text"
                 className="form-control"
                 placeholder="Enter your Bank Account Number"
+                name="account"
+                onChange={(e) => handleChange(e)}
                 required
               />
             </div>
@@ -45,16 +82,38 @@ function BankAccount(props) {
                 type="text"
                 className="form-control"
                 placeholder="Enter your Bank IFSC"
+                name="ifsc"
+                onChange={(e) => {
+                  handleChange(e);
+                  if (e.target.value.length == 11) {
+                    fetchIFSCApi(e.target.value);
+                  }
+                }}
                 required
               />
             </div>
             <div className="col-md-6 mt-4">
-              <label className="form-label">MIRC NUMBER</label>
+              <label className="form-label">Bank Name</label>
               <input
                 type="text"
-                className="form-control"
-                placeholder="Enter your MIRC Number"
-                required
+                className="form-control bg-body"
+                placeholder="Bank Name"
+                name="bankName"
+                defaultValue={ifscDetails.BANK}
+                // onChange={(e) => handleChange(e)}
+                disabled
+              />
+            </div>
+            <div className="col-md-6 mt-4">
+              <label className="form-label">MICR NUMBER</label>
+              <input
+                type="text"
+                className="form-control bg-body"
+                placeholder="Enter your MICR Number"
+                name="micr"
+                defaultValue={ifscDetails.MICR}
+                // onChange={(e) => handleChange(e)}
+                disabled
               />
             </div>
             <div className="col-md-6 mt-4">
@@ -63,6 +122,9 @@ function BankAccount(props) {
                 type="text"
                 className="form-control"
                 placeholder="Enter Your Branch Address"
+                name="address"
+                defaultValue={ifscDetails.ADDRESS}
+                onChange={(e) => handleChange(e)}
                 required
               />
             </div>
