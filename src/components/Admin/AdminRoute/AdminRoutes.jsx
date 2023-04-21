@@ -4,6 +4,7 @@ import PageNotFound from "../../PNF/PageNotFound";
 import AdminDashBoard from "../AdminDashBoard/AdminDashBoard";
 import AdminAllAgents from "../Agent/AdminAllAgents";
 import AdminAllLenders from "../Lenders/AdminAllLenders";
+import "./AdminRoutes.css";
 
 function AdminRoute(props) {
   return (
