@@ -3,20 +3,20 @@ import { Link, useNavigate } from "react-router-dom";
 // import AdminAllLenders from "./AdminAllLenders";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import AdminAddAgent from "../Agent/AdminAddAgent";
+import ChangeUserRole from "./ChangeUserRole";
 
 function AdminDashBoard(props) {
   const navigate = useNavigate();
   return (
-    <>
-      <div className="py-2">
-        <div className="container">
+    <div>
+      <div className=" bg-body-secondary py-2">
+        <div className="container-fluid">
           <div className="row">
-            <div className="col-md-12 border border-secondary">
-              ........... Admin DashBoard ...........
-              <div className="text-center mt-3">
-                <div className="fs-1 fw-bold">Tech Team Management</div>
+            <div className="col-md-12">
+              <div className="mt-3">
+                <div className="fs-4 fw-bold">Tech Team Management</div>
               </div>
-              <div className="col-md-4 py-4">
+              <div className="col-md-4 py-2">
                 <div className="list-group">
                   {/* <Link to="/lenders">test</Link> */}
                   <button
@@ -39,8 +39,12 @@ function AdminDashBoard(props) {
                   >
                     Add Agent <ArrowForwardIcon className="float-end" />
                   </button>
-                  <button className="list-group-item list-group-item-action disabled">
-                    A fourth button item
+                  <button
+                    className="link-primary list-group-item list-group-item-action"
+                    data-bs-toggle="modal"
+                    data-bs-target="#changeUserRole"
+                  >
+                    Change User's Role
                     <ArrowForwardIcon className="float-end" />
                   </button>
                 </div>
@@ -50,9 +54,9 @@ function AdminDashBoard(props) {
           </div>
         </div>
       </div>
-
       <AdminAddAgent />
-    </>
+      <ChangeUserRole />
+    </div>
   );
 }
 

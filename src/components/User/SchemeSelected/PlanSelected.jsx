@@ -43,7 +43,37 @@ function PlanSelected(props) {
                 </div>
               </div>
               <div className="col-md-6 ms-4 py-5">
-                <input type="CheckBox" />
+                <form>
+                  {/* <div class="mb-3 row">
+                    <label for="staticEmail" class="col-sm-2 col-form-label">
+                      Email
+                    </label>
+                    <div class="col-sm-10">
+                      <input
+                        type="text"
+                        readonly
+                        class="form-control-plaintext"
+                        id="staticEmail"
+                        value="email@example.com"
+                      />
+                    </div>
+                  </div> */}
+                  <div class="mb-3 row">
+                    <label class="col-sm-4 col-form-label">
+                      Enter Amount :
+                    </label>
+                    <div class="col-sm-7">
+                      <input
+                        type="text"
+                        class="form-control col-md-6 form-text required empty"
+                      />
+                    </div>
+                  </div>
+                  <div className="col-md-8 mt-4">
+                    <input type="CheckBox" className="form-check-input" />{" "}
+                    <label className="form-check-label">Ready to Invest</label>
+                  </div>
+                </form>
               </div>
             </div>
           </div>

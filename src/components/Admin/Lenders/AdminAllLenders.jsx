@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import AdminUpdateLender from "./AdminUpdateLender";
 
 function AdminAllLenders(props) {
   const [userDetails, setUserDetails] = useState({});
   const [isLoding, setIsLoding] = useState(false);
+  const [isDeleteClient, setIsDeleteClient] = useState(false);
+  const [oneLenderData, setOneLenderData] = useState({});
 
   // http://10.10.1.160:4000/api/v1/lenderData
   const fetchUserDetails = async () => {
@@ -29,16 +32,36 @@ function AdminAllLenders(props) {
     }
   };
 
+  const handleDeleteLender = async (id) => {
+    try {
+      setIsDeleteClient(true);
+      const responce = await axios.patch(`/deleteUser?id=${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (responce.status === 200) {
+        setIsDeleteClient(false);
+        window.location = "/lenders"; //comming this to not reload the whole page
+      } else {
+        alert("Somethings went wrong !!!!");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     fetchUserDetails();
-  }, []);
+  }, [isDeleteClient]);
   // console.log("userDetails--++++++", userDetails);
 
   return (
-    <div className="py-4">
-      <div className="container">
-        <div className="text-center mt-3">
-          <div className="fs-1 fw-bold ">All Lenders Details</div>
+    <div className="py-2">
+      <div className="container-fluid">
+        <div className="mt-1">
+          <div className="fs-5 fw-bold ">All Lenders Details</div>
         </div>
         <div className="row">
           <div className="col-md-12">
@@ -128,12 +151,20 @@ function AdminAllLenders(props) {
                         <td>{person?.createdBy}</td>
 
                         <td>
-                          <button className="btn btn-danger">
+                          <button
+                            className="btn btn-danger"
+                            onClick={() => handleDeleteLender(person?.uid)}
+                          >
                             <DeleteIcon />
                           </button>
                         </td>
                         <td>
-                          <button className="btn btn-primary">
+                          <button
+                            className="btn btn-primary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#updateLender"
+                            onClick={() => setOneLenderData(person)}
+                          >
                             <EditIcon />
                           </button>
                         </td>
@@ -145,6 +176,7 @@ function AdminAllLenders(props) {
           </div>
         </div>
       </div>
+      <AdminUpdateLender lender={oneLenderData} />
     </div>
   );
 }

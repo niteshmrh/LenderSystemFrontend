@@ -62,10 +62,10 @@ function AdminAllAgents(props) {
   // console.log("OneagentData--++++++", oneAgentData);
 
   return (
-    <div className="py-4">
-      <div className="container">
-        <div className="text-center mt-3">
-          <div className="fs-1 fw-bold ">All Agent Details</div>
+    <div className="py-2">
+      <div className="container-fluid">
+        <div className="mt-1">
+          <div className="fs-5 fw-bold">All Agent Details</div>
         </div>
         <div className="row">
           <div className="col-md-12">

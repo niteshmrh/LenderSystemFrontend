@@ -63,7 +63,10 @@ function Header(props) {
                     </NavLink>
                   </div>
                 ) : (
-                  <div className="flex-row">
+                  <div className="d-flex">
+                    <div className="me-2">
+                      {user.roleId == 1 ? <span>Admin</span> : <span></span>}
+                    </div>{" "}
                     <div className="btn-group dropstart">
                       <a
                         // type="button"
