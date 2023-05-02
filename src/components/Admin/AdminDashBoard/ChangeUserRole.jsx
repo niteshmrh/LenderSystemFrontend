@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 
 function ChangeUserRole(props) {
@@ -9,9 +10,33 @@ function ChangeUserRole(props) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    console.log("In handle submit", formData);
+    try {
+      setIsFormSubmit(true);
+      const response = await axios.patch(
+        `/updateUserRole`,
+        {
+          userId: formData.userId,
+          roleId: formData.roleId,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.status === 200) {
+        setIsFormSubmit(false);
+        // setSuccess(true);
+        window.location = "/";
+      } else {
+        alert("Something went Wrong !!!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -56,8 +81,8 @@ function ChangeUserRole(props) {
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="User Current Role Id"
-                        name="RoleId"
+                        placeholder="User Id"
+                        name="userId"
                         onChange={(e) => handleChange(e)}
                         required
                       />
@@ -65,7 +90,7 @@ function ChangeUserRole(props) {
                     <div className="ms-3 col-md-5 float-end">
                       <select
                         className="form-select"
-                        name="newRoleId"
+                        name="roleId"
                         onChange={(e) => handleChange(e)}
                       >
                         <option>Select New Role</option>
@@ -87,7 +112,7 @@ function ChangeUserRole(props) {
                 </form>
               </div>
             ) : (
-              <div>{formData.toStringfy()}</div>
+              <div className="text-primary">Role Id Successfully Updated</div>
             )}
           </div>
         </div>

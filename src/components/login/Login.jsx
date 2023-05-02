@@ -17,7 +17,7 @@ function Login(props) {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    // console.log(formData);
     try {
       const response = await axios.post(
         "/signin",

@@ -2,11 +2,11 @@ import React from "react";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { NavLink } from "react-router-dom";
-// import { fontSize } from "@mui/system";
+import "./Home.css";
 
 function Home(props) {
   return (
-    <div className="py-1">
+    <div className="py-1 home">
       <div className="container">
         <div className="row">
           <div className="col-md-12">
