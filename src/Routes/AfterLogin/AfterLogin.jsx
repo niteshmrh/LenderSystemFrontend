@@ -10,7 +10,12 @@ import PageNotFound from "../../components/PNF/PageNotFound";
 
 function AfterLogin(props) {
   const { user } = useContext(UserContext);
-  console.log("In After Login user Role Id", user.roleId);
+  console.log(
+    "Route In After Login user Role Id",
+    user.roleId,
+    "user id",
+    user.id
+  );
   return (
     <div>
       {user?.roleId == 1 ? (

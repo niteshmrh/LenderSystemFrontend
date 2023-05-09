@@ -1,11 +1,46 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { UserContext } from "../../../context/userContext";
 
 function PlanSelected(props) {
   const location = useLocation();
   //   console.log("-------------->>>>>", location.state);
   const plan = location.state;
+  const { user } = useContext(UserContext);
+  const [wallet, setWallet] = useState({});
+  const [loading, setIsLoading] = useState(false);
+  const id = user?.id;
+  const navigate = useNavigate();
+  //****************************************************************** */
 
+  const fetchAccountDetails = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.get(`/getWallet?userId=${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      // console.log("response wallet", response.data);
+      if (response.status === 200) {
+        setWallet(response.data.data);
+        setIsLoading(false);
+        // console.log("In wallet response data---------", response.data);
+      } else {
+        alert("somethiong went wrong");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAccountDetails();
+  }, []);
+
+  //**************************************************************** */
   return (
     <div className="py-3">
       <div className="container">
@@ -44,32 +79,31 @@ function PlanSelected(props) {
               </div>
               <div className="col-md-6 ms-4 py-5">
                 <form>
-                  {/* <div class="mb-3 row">
-                    <label for="staticEmail" class="col-sm-2 col-form-label">
-                      Email
+                  <div className="p-2 col-md-10 border rounded bg-light">
+                    <label className="col-form-label ms-3">
+                      Balance :{"    "}
+                      {wallet?.amount != null ? wallet.amount : 0}
                     </label>
-                    <div class="col-sm-10">
-                      <input
-                        type="text"
-                        readonly
-                        class="form-control-plaintext"
-                        id="staticEmail"
-                        value="email@example.com"
-                      />
-                    </div>
-                  </div> */}
-                  <div class="mb-3 row">
-                    <label class="col-sm-4 col-form-label">
-                      Enter Amount :
-                    </label>
-                    <div class="col-sm-7">
-                      <input
-                        type="text"
-                        class="form-control col-md-6 form-text required empty"
-                      />
-                    </div>
                   </div>
-                  <div className="col-md-8 mt-4">
+                  <div className="ms-1">
+                    {(wallet?.amount != null ? wallet?.amount : 0) <
+                    plan?.minimumInvestmentAmount ? (
+                      <div className="text-danger fw-light">
+                        Add Minimum Amount of{" "}
+                        <span className="fw-bold">
+                          {plan?.minimumInvestmentAmount -
+                            (wallet?.amount != null ? wallet?.amount : 0)}
+                        </span>{" "}
+                        to your{" "}
+                        <Link to="/passbook" className="fw-bold">
+                          wallet
+                        </Link>
+                      </div>
+                    ) : (
+                      <div></div>
+                    )}
+                  </div>
+                  <div className="col-md-8 mt-2">
                     <input type="CheckBox" className="form-check-input" />{" "}
                     <label className="form-check-label">Ready to Invest</label>
                   </div>

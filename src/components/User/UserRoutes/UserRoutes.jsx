@@ -9,6 +9,7 @@ import Report from "../Report/Report";
 import Feedback from "../FeedBack/Feedback";
 import BankAccount from "../BankAccount/BankAccount";
 import Nominee from "../Nominee/Nominee";
+import EscrowPassbook from "../EscrowPassbook/EscrowPassbook";
 
 function UserRoutes(props) {
   return (
@@ -16,6 +17,7 @@ function UserRoutes(props) {
       <Route path="/" element={<UserDashBoard type="user_dashboard" />} />
       <Route path="/registration" element={<Registration type="reg" />} />
       <Route path="/planselected" element={<PlanSelected type="setplan" />} />
+      <Route path="/passbook" element={<EscrowPassbook type="" />} />
       {/* <Route path="/plan" element={<Plan type="plan" />} /> */}
       <Route path="/needhelp" element={<NeedHelp type="Need_help" />} />
       <Route path="/report" element={<Report type="Report" />} />

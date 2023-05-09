@@ -30,7 +30,7 @@ function Sidebar(props) {
         </Link>
 
         <Link
-          to="/"
+          to="/passbook"
           className="list-group-item list-group-item-action list-group-item-dark"
         >
           ESCROW PASSBOOK
