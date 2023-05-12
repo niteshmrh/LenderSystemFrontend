@@ -14,7 +14,7 @@ function Header(props) {
   }
 
   return (
-    <div className="py-1">
+    <div className="py-0">
       <div className="container-fluid">
         <div className="row">
           <div className="col-md-12">

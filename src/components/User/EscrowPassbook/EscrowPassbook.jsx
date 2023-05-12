@@ -10,7 +10,7 @@ function EscrowPassbook(props) {
   const [loading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [amount, setAmount] = useState(0);
-  const [transections, setTransections] = useState({});
+  const [transactions, setTransactions] = useState({});
   const id = user?.id;
   const navigate = useNavigate();
   // console.log("---- in wallet", user.id);
@@ -44,8 +44,9 @@ function EscrowPassbook(props) {
         `/addAmount?userId=${id}`,
         {
           // userId: id,
-          txn_type: "credit",
+          txn_type: "Wallet Recharge",
           amount: amount,
+          flowType: "Credit",
         },
         {
           headers: {
@@ -65,16 +66,16 @@ function EscrowPassbook(props) {
     }
   };
 
-  const handleTransections = async () => {
+  const handleTransactions = async () => {
     try {
       setIsLoading(true);
-      const response = await axios.get(`/getTransection?userId=${id}`, {
+      const response = await axios.get(`/getTransaction?userId=${id}`, {
         headers: {
           "Content-Type": "application/json",
         },
       });
       if (response.status === 200) {
-        setTransections(response.data.data);
+        setTransactions(response.data.data);
         setIsLoading(false);
       } else {
         alert("something went wrong");
@@ -86,11 +87,13 @@ function EscrowPassbook(props) {
 
   useEffect(() => {
     fetchAccountDetails();
-  }, []);
+    handleTransactions();
+  }, [loading]);
   // <div>Escrow passbook</div>
 
-  console.log("passbook wallet----", wallet);
-  console.log("passbook amount----", amount);
+  // console.log("passbook wallet----", wallet);
+  // console.log("passbook amount----", amount);
+  console.log("passbook transection----", transactions);
 
   return (
     <div>
@@ -185,7 +188,7 @@ function EscrowPassbook(props) {
                     name="amount"
                     onChange={(e) => {
                       setAmount(e.target.value);
-                      console.log(e.target.value);
+                      // console.log(e.target.value);
                     }}
                   />
                 </div>
@@ -217,16 +220,6 @@ function EscrowPassbook(props) {
           <div className="py-3">
             <div className="col-md-12">
               <div>Escrow Transaction Details:</div>
-              {/* <div
-                className="d-flex border rounded bg-light p-4 fw-medium"
-                style={{ fontSize: "0.8rem" }}
-              >
-                <div className="col-md-2">DATE</div>
-                <div className="col-md-3">DESCRIPTION</div>
-                <div className="col-md-2">DEBIT</div>
-                <div className="col-md-2">CREDIT</div>
-                <div className="col-md-3">BALANCE</div>
-              </div> */}
               <table
                 className="table border rounded bg-light p-4 fw-medium"
                 style={{ fontSize: "0.813rem" }}
@@ -235,32 +228,28 @@ function EscrowPassbook(props) {
                   <tr>
                     <th scope="col">DATE</th>
                     <th scope="col">DESCRIPTION</th>
-                    <th scope="col">DEBIT</th>
-                    <th scope="col">CREDIT</th>
+                    {/* <th scope="col">DEBIT</th>
+                    <th scope="col">CREDIT</th> */}
+                    <th scope="col">TRANSACTION TYPE</th>
                     <th scope="col">BALANCE</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {transections.length > 0 &&
-                    transections.map((tran, index) => (
-                      <tr className="text-center" key={index}>
+                  {transactions.length > 0 &&
+                    transactions.map((tran, index) => (
+                      <tr key={index}>
                         <td>
-                          {tran?.updatedAt == null ? "null" : tran?.updatedAt}
-                        </td>
-                        <td>
-                          {tran?.description == null
+                          {tran?.updatedAt == null
                             ? "null"
-                            : tran?.description}
+                            : new Date(tran?.updatedAt).toUTCString()}
                         </td>
+
                         <td>
                           {tran?.txn_type == null ? "null" : tran?.txn_type}
                         </td>
-                        <td>
-                          {tran?.updatedAt == null ? "null" : tran?.updatedAt}
-                        </td>
-                        <td>
-                          {tran?.updatedAt == null ? "null" : tran?.updatedAt}
-                        </td>
+                        <td>{tran?.flowType}</td>
+                        {/* <td className="text-success">Credit</td> */}
+                        <td>{tran?.amount == null ? "null" : tran?.amount}</td>
                       </tr>
                     ))}
                 </tbody>

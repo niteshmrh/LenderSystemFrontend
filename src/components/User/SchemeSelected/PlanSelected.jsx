@@ -11,6 +11,8 @@ function PlanSelected(props) {
   const { user } = useContext(UserContext);
   const [wallet, setWallet] = useState({});
   const [loading, setIsLoading] = useState(false);
+  const [goodAmount, setGoodAmount] = useState(false);
+  const [amountToinvest, setAmountToInvest] = useState(0);
   const id = user?.id;
   const navigate = useNavigate();
   //****************************************************************** */
@@ -36,10 +38,47 @@ function PlanSelected(props) {
     }
   };
 
+  const handleInvest = async (e) => {
+    e.preventDefault();
+    if (
+      amountToinvest >= plan.minimumInvestmentAmount &&
+      wallet?.amount >= amountToinvest
+    ) {
+      try {
+        const response = await axios.post(
+          `/investPlan?userId=${id}`,
+          {
+            planId: plan?.id,
+            amount: amountToinvest,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (response.status === 200) {
+          alert(response.data.message);
+          navigate("/passbook");
+        }
+        if (response.status === 308) {
+          alert(response.data.message);
+          console.log(response);
+          navigate("/passbook");
+        }
+      } catch (e) {
+        console.log("something went wrong");
+      }
+    } else {
+      alert("Invalid Amount");
+    }
+  };
+
   useEffect(() => {
     fetchAccountDetails();
   }, []);
 
+  // console.log(plan);
   //**************************************************************** */
   return (
     <div className="py-3">
@@ -103,9 +142,40 @@ function PlanSelected(props) {
                       <div></div>
                     )}
                   </div>
+                  <div className="row g-3 align-items-center mt-1 d-flex">
+                    <div className="col-auto">
+                      <label className="col-form-label">
+                        Enter Amount to Invest :{" "}
+                      </label>
+                    </div>
+                    <div className="col-md-5">
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="InvestAmount"
+                        onChange={(e) => setAmountToInvest(e.target.value)}
+                      />
+                    </div>
+                    <div className="text-danger">
+                      {wallet?.amount < amountToinvest ? (
+                        <div>
+                          Add Amount to Your Wallet{" "}
+                          <Link to="/passbook">Wallet</Link>
+                        </div>
+                      ) : (
+                        <div></div>
+                      )}
+                    </div>
+                  </div>
                   <div className="col-md-8 mt-2">
                     <input type="CheckBox" className="form-check-input" />{" "}
                     <label className="form-check-label">Ready to Invest</label>
+                  </div>
+                  <div
+                    className="btn btn-primary btn-lg mt-1"
+                    onClick={(e) => handleInvest(e)}
+                  >
+                    Invest
                   </div>
                 </form>
               </div>
