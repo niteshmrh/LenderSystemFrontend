@@ -82,7 +82,12 @@ function Home(props) {
                           Lender
                         </button>
                       </NavLink>
-                      <p className="fw-lighter">Get returns up to 12%</p>
+                      <p
+                        className="fw-strong mt-1"
+                        style={{ fontSize: "0.8rem" }}
+                      >
+                        Get returns up to 12%
+                      </p>
                       <div
                         className="border border-primary text-center rounded p-2"
                         style={{ width: "13rem" }}
@@ -102,12 +107,17 @@ function Home(props) {
                       >
                         Borrower
                       </button>
-                      <p className="fw-lighter">Get rates as low as 12%</p>
+                      <p
+                        className="fw-strong mt-1"
+                        style={{ fontSize: "0.8rem" }}
+                      >
+                        Get rates as low as 12%
+                      </p>
                       <div
                         className="border border-success text-center rounded p-2"
                         style={{ width: "13rem" }}
                       >
-                        <div className="text-primary">Borrowers </div>
+                        <div className="text-success">Borrowers </div>
                         <div>Seeking to borrow</div>
                         <div>
                           <CurrencyRupeeIcon />

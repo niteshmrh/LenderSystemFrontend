@@ -38,13 +38,14 @@ function PlanSelected(props) {
     }
   };
 
-  const handleInvest = async (e) => {
-    e.preventDefault();
-    if (
-      amountToinvest >= plan.minimumInvestmentAmount &&
-      wallet?.amount >= amountToinvest
-    ) {
-      try {
+  const handleInvest = async () => {
+    // e.preventDefault();
+
+    try {
+      if (
+        amountToinvest >= plan.minimumInvestmentAmount &&
+        Math.abs(wallet?.amount) >= amountToinvest
+      ) {
         const response = await axios.post(
           `/investPlan?userId=${id}`,
           {
@@ -66,11 +67,11 @@ function PlanSelected(props) {
           console.log(response);
           navigate("/passbook");
         }
-      } catch (e) {
-        console.log("something went wrong");
+      } else {
+        alert("Invalid Amount");
       }
-    } else {
-      alert("Invalid Amount");
+    } catch (e) {
+      console.log("something went wrong");
     }
   };
 
@@ -173,7 +174,7 @@ function PlanSelected(props) {
                   </div>
                   <div
                     className="btn btn-primary btn-lg mt-1"
-                    onClick={(e) => handleInvest(e)}
+                    onClick={handleInvest}
                   >
                     Invest
                   </div>
