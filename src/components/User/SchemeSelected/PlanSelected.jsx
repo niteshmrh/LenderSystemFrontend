@@ -40,35 +40,27 @@ function PlanSelected(props) {
 
   const handleInvest = async () => {
     // e.preventDefault();
-
     try {
-      if (
-        amountToinvest >= plan.minimumInvestmentAmount &&
-        Math.abs(wallet?.amount) >= amountToinvest
-      ) {
-        const response = await axios.post(
-          `/investPlan?userId=${id}`,
-          {
-            planId: plan?.id,
-            amount: amountToinvest,
+      const response = await axios.post(
+        `/investPlan?userId=${id}`,
+        {
+          planId: plan?.id,
+          amount: amountToinvest,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
           },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        if (response.status === 200) {
-          alert(response.data.message);
-          navigate("/passbook");
         }
-        if (response.status === 308) {
-          alert(response.data.message);
-          console.log(response);
-          navigate("/passbook");
-        }
-      } else {
-        alert("Invalid Amount");
+      );
+      if (response.status === 200) {
+        alert(response.data.message);
+        navigate("/passbook");
+      }
+      if (response.status === 308) {
+        alert(response.data.message);
+        console.log(response);
+        navigate("/passbook");
       }
     } catch (e) {
       console.log("something went wrong");

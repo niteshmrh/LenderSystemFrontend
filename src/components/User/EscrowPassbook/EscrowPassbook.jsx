@@ -231,7 +231,8 @@ function EscrowPassbook(props) {
                     {/* <th scope="col">DEBIT</th>
                     <th scope="col">CREDIT</th> */}
                     <th scope="col">TRANSACTION TYPE</th>
-                    <th scope="col">BALANCE</th>
+                    <th scope="col">AMOUNT</th>
+                    <th scope="col">BALANCE AMOUNT</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -250,6 +251,9 @@ function EscrowPassbook(props) {
                         <td>{tran?.flowType}</td>
                         {/* <td className="text-success">Credit</td> */}
                         <td>{tran?.amount == null ? "null" : tran?.amount}</td>
+                        <td>
+                          {/* {wallet?.amount == null ? "null" : wallet?.amount} */}
+                        </td>
                       </tr>
                     ))}
                 </tbody>
