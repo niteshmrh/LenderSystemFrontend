@@ -63,6 +63,7 @@ function AdminAllLenders(props) {
         <div className="mt-1">
           <div className="fs-5 fw-bold ">All Lenders Details</div>
         </div>
+
         <div className="row">
           <div className="col-md-12">
             <div className="mt-3 text-center">
