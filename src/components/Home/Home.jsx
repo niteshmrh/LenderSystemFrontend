@@ -18,7 +18,7 @@ function Home(props) {
                     Live Feed
                   </div>
                   <hr />
-                  <div className=" d-flex col-md-12 ms-2 mb-3">
+                  <div className=" d-flex col-md-12 ms-3 mb-3">
                     <div className="flex-column col-md-6">
                       <div className="text-success fw-bold ms-1">
                         36.69% <ArrowDropUpIcon />
@@ -29,25 +29,18 @@ function Home(props) {
                       </div>
                       <p className="ms-1">Loan amount approved</p>
                     </div>
-                    <div
-                      className="flex-column col-md-6 text-center bg-light border-bottom border-4"
-                      style={{ marginLeft: "-0.40rem" }}
-                    >
-                      <div className="d-flex fs-4 ms-5 mt-3">
-                        <span>24.37% &nbsp;&nbsp;</span>
-                        <span className="text-success fw-bold">
-                          0.45% <ArrowDropUpIcon />
-                        </span>
+                    <div className="card flex-column col-md-6 text-start">
+                      <div className="d-flex fs-5">
+                        <div>24.37% &nbsp;&nbsp;</div>
+                        <div className="text-success fw-bold">0.45%</div>
+                        <div className="text-success fw-bold">
+                          <ArrowDropUpIcon />
+                        </div>
                       </div>
-                      <span
-                        className="text-center"
-                        style={{ marginRight: "0.50rem" }}
-                      >
-                        Average interest rate
-                      </span>
+                      <span className="text-start">Average interest rate</span>
                     </div>
                   </div>
-                  <div className="d-flex col-md-12 ms-2 me-2">
+                  <div className="d-flex col-md-12 ms-3 me-2">
                     <div className="flex-column col-md-6">
                       <div className="text-success fw-bold ms-1">
                         7.84% <ArrowDropUpIcon />

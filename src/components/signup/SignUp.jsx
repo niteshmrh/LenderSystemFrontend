@@ -80,7 +80,7 @@ function SignUp(props) {
             <div className="border bg-light rounded p-3 m-2">
               {/* heading */}
               <h2 className="text-center mt-3">
-                SignUp as <span style={{ color: "pink" }}>Lender</span>
+                SignUp as <span className="text-primary">Lender</span>
               </h2>
               <form onSubmit={(e) => handleSubmit(e)}>
                 {/* Name */}
@@ -110,9 +110,7 @@ function SignUp(props) {
                     {/* <div className="valid-feedback">Looks good!</div> */}
                   </div>
                 </div>
-
                 {/* Email Section */}
-
                 <div className="mb-3">
                   {/* <label className="form-label">Pan Card Number</label> */}
                   <input
@@ -124,9 +122,7 @@ function SignUp(props) {
                     required
                   />
                 </div>
-
                 {/* Mobile Number */}
-
                 <div className="mb-3">
                   {/* <label className="form-label">Mobile Number</label> */}
                   <input
@@ -138,9 +134,7 @@ function SignUp(props) {
                     required
                   />
                 </div>
-
                 {/* Password section */}
-
                 <div className="mb-1">
                   {/* <label className="form-label">Password</label> */}
                   <input
@@ -156,7 +150,7 @@ function SignUp(props) {
                   />
                   <div className="col-auto">
                     <span className="form-text">
-                      Must be 8-20 characters long.
+                      &nbsp;Must be 8-20 characters long.
                     </span>
                   </div>
                 </div>
@@ -187,10 +181,9 @@ function SignUp(props) {
                     </div>
                   )}
                 </div>
-
                 {/* show password section */}
 
-                <div className="mb-3 form-check">
+                <div className="mb-3 ms-1 form-check">
                   <input
                     type="checkbox"
                     className="form-check-input"
@@ -206,9 +199,8 @@ function SignUp(props) {
                   />
                   <label className="form-check-label">Show password</label>
                 </div>
-
                 {/* Submit buttonsection */}
-                <div>
+                <div className="ms-1">
                   <p>
                     if already have an account ?{" "}
                     <NavLink to="/login" className="text-decoration-none">

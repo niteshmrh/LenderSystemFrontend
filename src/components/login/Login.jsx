@@ -67,7 +67,7 @@ function Login(props) {
               <div className="login-form border p-2 m-2 rounded bg-light">
                 {/* heading */}
                 <h2 className="text-center mt-3">
-                  LogIn as <span style={{ color: "pink" }}>Lender</span>
+                  LogIn as <span className="text-primary">Lender</span>
                 </h2>
 
                 <form onSubmit={(e) => handleSubmit(e)}>
