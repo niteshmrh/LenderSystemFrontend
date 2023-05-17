@@ -133,7 +133,19 @@ function EscrowPassbook(props) {
           saveAs(pdfBlob, `Transaction_Receipt.pdf`);
         });
       if (response.status === 200) {
-        console.log("Downloading........... ");
+        console.log("Downloaded successfull........... ");
+      } else {
+        alert("Something went wrong!!!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    try {
+      const responseMail = await axios.get(
+        `sendTransactionToMail?userId=${id}&day=${days}`
+      );
+      if (responseMail.status === 200) {
+        console.log("Mail send........... ");
       } else {
         alert("Something went wrong!!!");
       }
@@ -339,9 +351,7 @@ function EscrowPassbook(props) {
                             <td>
                               {tran?.amount == null ? "null" : tran?.amount}
                             </td>
-                            <td>
-                              {/* {wallet?.amount == null ? "null" : wallet?.amount} */}
-                            </td>
+                            <td>{tran?.balance == null ? 0 : tran?.balance}</td>
                           </tr>
                         ))}
                     </tbody>
